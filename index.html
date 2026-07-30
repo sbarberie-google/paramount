@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paramount+ CXAS Assistant | Mountain of Entertainment</title>
+  <link rel="stylesheet" href="style.css?v=5.0">
+</head>
+<body>
+
+  <!-- Floating Launcher Button with Pure White Logo -->
+  <button id="cxasLauncherBtn" class="cxas-launcher" title="Open Paramount+ Assistant">
+    <img src="logo.svg" class="paramount-launcher-img" alt="Paramount+ Logo">
+    <div class="unread-badge" id="unreadBadge"></div>
+  </button>
+
+  <!-- Chatbot Window Container -->
+  <div id="cxasChatbotContainer" class="cxas-container">
+    
+    <!-- Header Bar -->
+    <div class="cxas-header">
+      <div class="header-brand">
+        <img src="logo.svg" class="paramount-brand-img" alt="Paramount+ Logo">
+        <div class="brand-info">
+          <div class="brand-title">
+            Paramount+ Assistant
+            <span class="status-dot" title="CXAS Agent Active"></span>
+          </div>
+          <div class="brand-sub">Mountain of Entertainment • GECX Engine</div>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button id="ttsToggleBtn" class="icon-btn active-tts" title="GECX CXAS Chirp 3 Voice Active (Click to Mute)">
+          <svg id="ttsIcon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+          </svg>
+        </button>
+        <button id="cxasResetBtn" class="icon-btn" title="Reset Session">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.65 6.35A7.958 7.958 0 0012 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0112 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+          </svg>
+        </button>
+        <button id="cxasCloseBtn" class="icon-btn" title="Close Window">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Active Voice & Text Deployment Control Bar -->
+    <div class="module-badge-bar">
+      <div class="module-badges">
+        <span class="badge badge-text">CXAS Multi-Agent</span>
+        <span class="badge badge-voice">🎙️ Chirp 3 Erinome (HD)</span>
+      </div>
+    </div>
+
+    <!-- Chat Messages Body -->
+    <div id="cxasChatBody" class="cxas-body"></div>
+
+    <!-- Quick Action Chips -->
+    <div class="chips-container">
+      <button class="chip-btn" data-prompt="Recommend something with a thriller or mystery vibe.">🎬 Thriller / Mystery</button>
+      <button class="chip-btn" data-prompt="What live sports matches are streaming on Paramount+?">⚽ UEFA & Live Sports</button>
+      <button class="chip-btn" data-prompt="Can you show me my billing history and invoices?">💳 Billing History</button>
+      <button class="chip-btn" data-prompt="Please add Star Trek: Strange New Worlds to my watchlist.">➕ Add to Watchlist</button>
+      <button class="chip-btn" data-prompt="I want to cancel my subscription.">❌ Subscription Help</button>
+    </div>
+
+    <!-- Footer Input Toolbar (Text + Voice Modules) -->
+    <div class="cxas-footer">
+      <div id="speechStatus" class="speech-status"></div>
+      <div class="input-toolbar">
+        <input type="text" id="cxasChatInput" class="chat-input" placeholder="Ask Paramount+ Concierge or click mic to speak..." autocomplete="off">
+        <button id="micBtn" class="toolbar-btn mic-btn" title="Click to Speak">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/>
+          </svg>
+        </button>
+        <button id="cxasSendBtn" class="toolbar-btn send-btn" title="Send Text Message">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="app.js?v=5.0"></script>
+</body>
+</html>

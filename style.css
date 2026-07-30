@@ -1,0 +1,553 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --paramount-blue: #0064FF;
+  --paramount-blue-light: #00A3FF;
+  --paramount-cyan: #00D2FF;
+  --paramount-navy-dark: #020817;
+  --paramount-navy-mid: #081630;
+  --paramount-gradient-primary: linear-gradient(135deg, #00D2FF 0%, #0064FF 55%, #002699 100%);
+  --paramount-gradient-glass: linear-gradient(145deg, rgba(6, 18, 42, 0.94) 0%, rgba(2, 8, 22, 0.98) 100%);
+  --paramount-gradient-border: linear-gradient(135deg, rgba(0, 210, 255, 0.7), rgba(0, 100, 255, 0.4), rgba(0, 34, 123, 0.6));
+}
+
+body {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #020612;
+  background-image: url('bg.jpg');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% 100%; /* Fits image completely to viewport screen without cropping */
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  position: relative;
+  color: #ffffff;
+  /* 100% opacity and full vibrancy */
+}
+
+/* Remove dark overlay to preserve 100% background vibrancy */
+.bg-overlay {
+  display: none;
+}
+
+/* Floating Launcher Button with Paramount Gradient */
+.cxas-launcher {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 999;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: var(--paramount-gradient-primary);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 10px 30px rgba(0, 100, 255, 0.6), 0 0 35px rgba(0, 210, 255, 0.5);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.cxas-launcher:hover {
+  transform: scale(1.08) translateY(-4px);
+  box-shadow: 0 15px 45px rgba(0, 100, 255, 0.8), 0 0 45px rgba(0, 210, 255, 0.7);
+}
+
+.paramount-launcher-img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  filter: brightness(0) invert(1) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
+}
+
+.paramount-brand-img {
+  height: 38px;
+  max-width: 140px;
+  object-fit: contain;
+  filter: brightness(0) invert(1) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.unread-badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 16px;
+  height: 16px;
+  background: linear-gradient(135deg, #FF0055, #CC0044);
+  border-radius: 50%;
+  border: 2px solid #00D2FF;
+}
+
+/* Chatbot Container Window with Paramount Glassmorphism */
+.cxas-container {
+  position: fixed;
+  bottom: 110px;
+  right: 30px;
+  width: 450px;
+  height: 670px;
+  max-width: calc(100vw - 40px);
+  max-height: calc(100vh - 140px);
+  z-index: 1000;
+  background: var(--paramount-gradient-glass);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border-radius: 24px;
+  border: 1px solid rgba(0, 210, 255, 0.4);
+  box-shadow: 
+    0 25px 70px rgba(0, 0, 0, 0.85),
+    0 0 45px rgba(0, 100, 255, 0.35),
+    inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(35px) scale(0.94);
+  pointer-events: none;
+  transition: all 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cxas-container.is-open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: all;
+}
+
+/* Paramount Gradient Header Bar */
+.cxas-header {
+  padding: 16px 20px;
+  background: linear-gradient(90deg, rgba(0, 100, 255, 0.4) 0%, rgba(0, 210, 255, 0.18) 50%, rgba(2, 8, 23, 0.95) 100%);
+  border-bottom: 1px solid rgba(0, 210, 255, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-title {
+  font-size: 16.5px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.brand-title .status-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #00FF88;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #00FF88;
+  animation: pulse-dot 2s infinite;
+}
+
+@keyframes pulse-dot {
+  0% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.brand-sub {
+  font-size: 11px;
+  color: rgba(0, 210, 255, 0.9);
+  font-weight: 500;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.8);
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.icon-btn:hover {
+  background: rgba(0, 100, 255, 0.35);
+  border-color: #00D2FF;
+  color: #ffffff;
+  box-shadow: 0 0 12px rgba(0, 210, 255, 0.4);
+}
+
+.icon-btn.active-tts {
+  background: rgba(0, 100, 255, 0.3);
+  border-color: rgba(0, 210, 255, 0.6);
+  color: #00D2FF;
+}
+
+/* Voice & Text Module Control Bar */
+.module-badge-bar {
+  padding: 9px 18px;
+  background: linear-gradient(90deg, rgba(0, 100, 255, 0.2), rgba(0, 210, 255, 0.1));
+  border-bottom: 1px solid rgba(0, 210, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+}
+
+.module-badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.badge {
+  padding: 4px 10px;
+  border-radius: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 9.5px;
+  letter-spacing: 0.6px;
+}
+
+.badge-text {
+  background: linear-gradient(135deg, rgba(0, 100, 255, 0.3), rgba(0, 60, 180, 0.3));
+  color: #80C4FF;
+  border: 1px solid rgba(0, 163, 255, 0.45);
+}
+
+.badge-voice {
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.2), rgba(0, 180, 90, 0.2));
+  color: #00FF88;
+  border: 1px solid rgba(0, 255, 136, 0.4);
+  box-shadow: 0 0 10px rgba(0, 255, 136, 0.2);
+}
+
+.voice-select {
+  background: rgba(0, 100, 255, 0.25);
+  border: 1px solid rgba(0, 210, 255, 0.45);
+  color: #00D2FF;
+  border-radius: 12px;
+  padding: 4px 10px;
+  font-size: 10.5px;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.voice-select:hover {
+  background: rgba(0, 210, 255, 0.35);
+  color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 210, 255, 0.4);
+}
+
+.voice-select option {
+  background: #081630;
+  color: #ffffff;
+}
+
+/* Chat Body */
+.cxas-body {
+  flex: 1;
+  padding: 18px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cxas-body::-webkit-scrollbar {
+  width: 5px;
+}
+
+.cxas-body::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #00D2FF, #0064FF);
+  border-radius: 10px;
+}
+
+/* Message Rows */
+.msg-row {
+  display: flex;
+  flex-direction: column;
+  max-width: 88%;
+  animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.msg-row.user {
+  align-self: flex-end;
+}
+
+.msg-row.agent {
+  align-self: flex-start;
+}
+
+.msg-bubble {
+  padding: 13px 17px;
+  border-radius: 18px;
+  font-size: 14px;
+  line-height: 1.55;
+  word-wrap: break-word;
+}
+
+.msg-row.user .msg-bubble {
+  background: linear-gradient(135deg, #0064FF 0%, #0036B3 100%);
+  color: #ffffff;
+  border-bottom-right-radius: 4px;
+  border: 1px solid rgba(0, 210, 255, 0.4);
+  box-shadow: 0 6px 20px rgba(0, 100, 255, 0.35);
+}
+
+.msg-row.agent .msg-bubble {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(0, 100, 255, 0.12) 100%);
+  color: #F0F6FF;
+  border-bottom-left-radius: 4px;
+  border: 1px solid rgba(0, 210, 255, 0.25);
+  border-left: 3px solid #00D2FF;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.msg-bubble ul {
+  margin-left: 18px;
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
+.msg-bubble li {
+  margin-bottom: 4px;
+}
+
+.msg-bubble strong {
+  color: #00D2FF;
+  font-weight: 700;
+}
+
+.msg-meta {
+  font-size: 10.5px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.msg-row.user .msg-meta {
+  align-self: flex-end;
+}
+
+.tts-replay-btn {
+  background: rgba(0, 100, 255, 0.2);
+  border: 1px solid rgba(0, 210, 255, 0.4);
+  color: #00D2FF;
+  border-radius: 12px;
+  padding: 2px 8px;
+  font-size: 11px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s ease;
+}
+
+.tts-replay-btn:hover {
+  background: rgba(0, 210, 255, 0.3);
+  color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 210, 255, 0.4);
+}
+
+/* Quick Action Chips */
+.chips-container {
+  padding: 10px 16px;
+  display: flex;
+  gap: 9px;
+  overflow-x: auto;
+  background: rgba(2, 8, 20, 0.6);
+  border-top: 1px solid rgba(0, 210, 255, 0.15);
+}
+
+.chips-container::-webkit-scrollbar {
+  display: none;
+}
+
+.chip-btn {
+  background: linear-gradient(135deg, rgba(0, 100, 255, 0.2), rgba(0, 210, 255, 0.1));
+  border: 1px solid rgba(0, 210, 255, 0.35);
+  color: #E0F2FF;
+  padding: 7px 14px;
+  border-radius: 18px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.chip-btn:hover {
+  background: linear-gradient(135deg, #0064FF, #00D2FF);
+  border-color: #ffffff;
+  color: #ffffff;
+  box-shadow: 0 4px 15px rgba(0, 210, 255, 0.4);
+  transform: translateY(-1px);
+}
+
+/* Typing Indicator */
+.typing-indicator-row {
+  align-self: flex-start;
+  background: rgba(0, 100, 255, 0.15);
+  padding: 12px 18px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid rgba(0, 210, 255, 0.25);
+  border-left: 3px solid #00D2FF;
+}
+
+.typing-dot {
+  width: 7px;
+  height: 7px;
+  background: #00D2FF;
+  border-radius: 50%;
+  animation: typingBounce 1.4s infinite ease-in-out both;
+}
+
+.typing-dot:nth-child(1) { animation-delay: -0.32s; }
+.typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes typingBounce {
+  0%, 80%, 100% { transform: scale(0.3); opacity: 0.3; }
+  40% { transform: scale(1); opacity: 1; }
+}
+
+/* Footer & Input Toolbar */
+.cxas-footer {
+  padding: 14px;
+  background: linear-gradient(180deg, rgba(2, 8, 23, 0.95) 0%, rgba(1, 4, 12, 0.98) 100%);
+  border-top: 1px solid rgba(0, 210, 255, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1.5px solid rgba(0, 210, 255, 0.35);
+  border-radius: 28px;
+  padding: 5px 7px 5px 16px;
+  transition: all 0.25s ease;
+}
+
+.input-toolbar:focus-within {
+  border-color: #00D2FF;
+  box-shadow: 0 0 16px rgba(0, 210, 255, 0.4);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.chat-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #ffffff;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.chat-input::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.toolbar-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.mic-btn {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.mic-btn:hover {
+  background: rgba(0, 210, 255, 0.25);
+  color: #00D2FF;
+}
+
+.mic-btn.is-recording {
+  background: linear-gradient(135deg, #FF0055, #CC0044);
+  color: #ffffff;
+  border-color: #FF0055;
+  animation: pulse-mic 1.2s infinite;
+}
+
+@keyframes pulse-mic {
+  0% { box-shadow: 0 0 0 0 rgba(255, 0, 85, 0.7); }
+  70% { box-shadow: 0 0 0 12px rgba(255, 0, 85, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 0, 85, 0); }
+}
+
+.send-btn {
+  background: var(--paramount-gradient-primary);
+  color: #ffffff;
+  box-shadow: 0 4px 15px rgba(0, 100, 255, 0.4);
+}
+
+.send-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(0, 210, 255, 0.6);
+}
+
+.send-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Speech Status Bar */
+.speech-status {
+  font-size: 11.5px;
+  color: #00FF88;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 16px;
+  font-weight: 500;
+}
