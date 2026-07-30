@@ -1,5 +1,16 @@
 (function () {
   const DEPLOYMENT_ID = "03d74452-138d-4176-a6a3-4a2587f6956f";
+  
+  // Optional: Set your public backend proxy URL here (e.g. Render, Vercel, Cloud Run, or Ngrok)
+  // Example: const PUBLIC_BACKEND_URL = "https://paramount-cxas.onrender.com";
+  const PUBLIC_BACKEND_URL = "";
+
+  function getApiBaseUrl() {
+    if (PUBLIC_BACKEND_URL && PUBLIC_BACKEND_URL.trim() !== "") {
+      return PUBLIC_BACKEND_URL.replace(/\/$/, "");
+    }
+    return "";
+  }
 
   // Session Management
   let sessionId = localStorage.getItem("pplus_session_id_8200");
@@ -179,7 +190,8 @@
     } else if (text) {
       try {
         speechStatus.textContent = "🔊 Synthesizing Chirp 3 Erinome Voice...";
-        const resp = await fetch("/api/tts", {
+        const apiBase = getApiBaseUrl();
+        const resp = await fetch(apiBase + "/api/tts", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -213,8 +225,10 @@
 
     showTypingIndicator();
 
+    const apiBase = getApiBaseUrl();
+
     try {
-      const response = await fetch("/api/run-session", {
+      const response = await fetch(apiBase + "/api/run-session", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -235,7 +249,13 @@
     } catch (err) {
       console.error("API Error:", err);
       removeTypingIndicator();
-      appendAgentMessage("⚠️ Network error. Please ensure the local demo server is running on port 8200.", null, false);
+
+      const isPublicHost = !window.location.hostname.includes("localhost") && !window.location.hostname.includes("127.0.0.1");
+      if (isPublicHost && !PUBLIC_BACKEND_URL) {
+        appendAgentMessage("🌐 **GitHub Pages Host Notice**:\nTo connect your live public GitHub Pages site to your CXAS Deployment `03d74452-138d-4176-a6a3-4a2587f6956f`, update `PUBLIC_BACKEND_URL` in `app.js` to point to your hosted backend proxy (e.g. Render, Railway, or Ngrok), or run `python3 server.py` locally.", null, false);
+      } else {
+        appendAgentMessage("⚠️ Network error. Please ensure the backend server is running.", null, false);
+      }
     } finally {
       isWaiting = false;
       sendBtn.disabled = false;
